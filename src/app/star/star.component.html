@@ -1,1 +1,18 @@
 <p>star works!</p>
+
+<div *ngIf="peoples != null">
+    <table>
+        <thead>
+            <th>Nome</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let people of peoples.results">
+                <td>{{ people.name }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button (click)="loadPeoples(peoples.previous)">Prev</button>
+
+    <button (click)="loadPeoples(peoples.next)">Next</button>
+</div>

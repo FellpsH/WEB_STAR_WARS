@@ -1,5 +1,2 @@
-export class Film {
 
-}
-
-
+export interface Film { }

@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Pessoa } from '../models/People';
+import { People } from '../models/People';
+import { Reponse } from '../models/Reponse';
 import { StarService } from '../services/star.service';
 
 @Component({
@@ -8,13 +10,21 @@ import { StarService } from '../services/star.service';
   styleUrls: ['./star.component.css'],
 })
 export class StarComponent implements OnInit {
-  constructor(private starService: StarService) {}
+  peoples: Reponse<People[]> | null;
+
+  constructor(private starService: StarService, private httpClient: HttpClient) {
+    this.peoples = null;
+  }
 
   ngOnInit(): void {
-    console.log('Start');
-    this.starService.getPeople(1).subscribe((result: Pessoa) => {
-      console.log('result', result);
+    this.starService.getPeoples().subscribe((response: Reponse<People[]>) => {
+      this.peoples = response;
     });
-    console.log('end');
+  }
+
+  public loadPeoples(url: string) : void {
+    this.httpClient.get<Reponse<People[]>>(url).subscribe((response: Reponse<People[]>) => {
+      this.peoples = response;
+    });
   }
 }
